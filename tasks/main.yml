@@ -1,0 +1,5 @@
+---
+- name: Création d'un utilisateur
+    user: name=invite comment="nouveau utilisateur"
+- name: Ajout de la clef ssh
+    authorized_key: user = invite key="{{lookup('file','~/.ssh/id_rsa.pub')}}"
