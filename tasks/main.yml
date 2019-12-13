@@ -3,3 +3,5 @@
     user: name=invite comment="nouveau utilisateur"
 - name: Ajout de la clef ssh
     authorized_key: user = invite key="{{lookup('file','~/.ssh/id_rsa.pub')}}"
+- name: invite devient sudoer
+      template: src=templates/sudoers.j2 dest=/etc/sudoers.d/invite -sudoer validate='visudo -cf %s'
