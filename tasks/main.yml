@@ -1,7 +1,15 @@
 ---
+- name: zsh
+  become: yes
+  apt:
+    name: zsh
+    state: latest
 - name: Création d'un utilisateur
-    user: name=invite comment="nouveau utilisateur"
+  become: yes
+  user: name=invite comment="nouveau utilisateur" shell=/usr/bin/zsh
 - name: Ajout de la clef ssh
-    authorized_key: user = invite key="{{lookup('file','~/.ssh/id_rsa.pub')}}"
+  become: yes
+  authorized_key: user=invite key="{{ lookup('file','~/.ssh/id_rsa.pub') }}"
 - name: invite devient sudoer
-      template: src=templates/sudoers.j2 dest=/etc/sudoers.d/invite -sudoer validate='visudo -cf %s'
+  become: yes
+  template: src=templates/sudoers.j2 dest=/etc/sudoers.d/invite-sudoer validate='visudo -cf %s'
